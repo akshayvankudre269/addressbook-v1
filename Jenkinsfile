@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent none
     tools {
         maven 'mymaven1'
     }
@@ -11,6 +11,7 @@ pipeline {
 
     stages {
         stage('Compile') {
+            agent any
             steps {
                 script {
                     echo 'Compiling the code'
@@ -20,6 +21,7 @@ pipeline {
             }
         }
         stage('CodeReview') {
+            agent any
             steps {
                 script {
                     echo 'Reviewing the code'
@@ -28,6 +30,7 @@ pipeline {
             }
         }
         stage('UnitTest') {
+            agent any
             when {
                 expression {
                     params.executeTests==true
@@ -41,6 +44,7 @@ pipeline {
             }
         }
         stage('CoverageAnalysis') {
+            agent any
             steps {
                 script {
                     echo 'Analysing the code'
@@ -49,6 +53,7 @@ pipeline {
             }
         }
         stage('Package') {
+            agent {label 'linux_slave1'}
             steps {
                 script {
                     echo 'Packaging the code'
@@ -57,6 +62,7 @@ pipeline {
             }
         }
         stage('PublishToJfrog') {
+            agent any
             input {
                 message "Do you want to publish the code to Jfrog artifactory?"
                 ok "Yes,publish it"
