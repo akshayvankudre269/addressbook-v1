@@ -17,7 +17,7 @@ pipeline {
             agent any
             steps {
                 script {
-                    sshagent(['MySlaveserver2']) {
+                    sshagent(['MySlaveServer2']) {
                         echo 'Compiling the code'
                         echo "Compiling the code for ${params.Env} environment"
                         //sh 'mvn compile'
